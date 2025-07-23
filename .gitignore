@@ -14,5 +14,5 @@ data_cache/
 *.tmp
 *.bak
 *.swp
-.venv-backups
-.hf_home
+.venv-backups/
+.hf_home/
