@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+## The "datasets" library cache
+.cache/
+data_cache/
+results/
+*.log
+*.tmp
+*.bak
+*.swp
