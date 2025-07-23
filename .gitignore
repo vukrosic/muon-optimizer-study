@@ -10,8 +10,9 @@ venv/
 ## The "datasets" library cache
 .cache/
 data_cache/
-results/
 *.log
 *.tmp
 *.bak
 *.swp
+.venv-backups
+.hf_home
