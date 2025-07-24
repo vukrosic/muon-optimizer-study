@@ -1,0 +1,34 @@
+[
+  {
+    "variant": "Muon (10 Steps, LR 0.0625)",
+    "final_loss": 9.463342666625977,
+    "val_loss": 9.379908638000488,
+    "val_accuracy": 0.104189453125,
+    "val_perplexity": 11847.932253955894,
+    "training_time": 5.884438991546631
+  },
+  {
+    "variant": "Muon (10 Steps, LR 0.065)",
+    "final_loss": 9.460755348205566,
+    "val_loss": 9.37524616241455,
+    "val_accuracy": 0.1064892578125,
+    "val_perplexity": 11792.820138363371,
+    "training_time": 4.990100622177124
+  },
+  {
+    "variant": "Muon (10 Steps, LR 0.0675)",
+    "final_loss": 9.4599609375,
+    "val_loss": 9.376654319763183,
+    "val_accuracy": 0.1075,
+    "val_perplexity": 11809.437982225825,
+    "training_time": 5.0237791538238525
+  },
+  {
+    "variant": "Muon (10 Steps, LR 0.065, Momentum 0.88)",
+    "final_loss": 9.459146499633789,
+    "val_loss": 9.377230453491212,
+    "val_accuracy": 0.1080517578125,
+    "val_perplexity": 11816.2437580867,
+    "training_time": 5.0368921756744385
+  }
+]

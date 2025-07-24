@@ -1,0 +1,163 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Focused Muon Optimizer Ablation Study</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; background-color: #f5f5f5; }
+            .container { max-width: 1200px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            h1 { color: #2c3e50; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+            h2 { color: #34495e; border-bottom: 2px solid #ecf0f1; padding-bottom: 5px; }
+            .summary { background-color: #ecf0f1; padding: 20px; border-radius: 5px; margin: 20px 0; }
+            .best { background-color: #d5f4e6; padding: 15px; border-radius: 5px; border-left: 5px solid #27ae60; }
+            .failed { background-color: #ffeaa7; padding: 15px; border-radius: 5px; border-left: 5px solid #f39c12; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+            th { background-color: #3498db; color: white; }
+            tr:nth-child(even) { background-color: #f2f2f2; }
+            .metric { font-weight: bold; color: #2980b9; }
+            .plot { text-align: center; margin: 20px 0; }
+            .plot img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 5px; }
+            .config { background-color: #fdf6e3; padding: 15px; border-radius: 5px; font-family: monospace; }
+            .insight { background-color: #e8f6ff; padding: 15px; border-radius: 5px; border-left: 4px solid #3498db; margin: 10px 0; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🎯 Focused Muon Optimizer Ablation Study</h1>
+            
+            <div class="summary">
+                <h2>📋 Experiment Configuration</h2>
+                <div class="config">
+                    Model Architecture: 256d, 4L, 8H<br>
+                    Training Steps: 30<br>
+                    Batch Size: 32<br>
+                    Sequence Length: 256<br>
+                    Base Learning Rate: 0.01<br>
+                    Evaluation Frequency: Every 50 steps<br>
+                    Total Experiments: 5 (5 successful)
+                </div>
+            </div>
+    
+            <div class="best">
+                <h2>🏆 Best Performing Optimizer</h2>
+                <strong>Muon (10 Steps, LR 0.065)</strong><br>
+                <span class="metric">Validation Loss:</span> 9.3752<br>
+                <span class="metric">Validation Perplexity:</span> 11792.82<br>
+                <span class="metric">Validation Accuracy:</span> 0.1065<br>
+                <span class="metric">Training Time:</span> 5.0s
+            </div>
+        
+            <h2>📊 Detailed Results</h2>
+            <table>
+                <tr>
+                    <th>Rank</th>
+                    <th>Optimizer Variant</th>
+                    <th>Val Loss</th>
+                    <th>Val Perplexity</th>
+                    <th>Val Accuracy</th>
+                    <th>Training Time (s)</th>
+                    <th>Improvement vs Base</th>
+                </tr>
+    
+                <tr>
+                    <td>1</td>
+                    <td>Muon (10 Steps, LR 0.065)</td>
+                    <td>9.3752</td>
+                    <td>11792.82</td>
+                    <td>0.1065</td>
+                    <td>5.0</td>
+                    <td></td>
+                </tr>
+        
+                <tr>
+                    <td>2</td>
+                    <td>Muon (10 Steps, LR 0.07)</td>
+                    <td>9.3756</td>
+                    <td>11797.24</td>
+                    <td>0.1080</td>
+                    <td>5.0</td>
+                    <td></td>
+                </tr>
+        
+                <tr>
+                    <td>3</td>
+                    <td>Muon (10 Steps, LR 0.055, Momentum 0.88)</td>
+                    <td>9.3823</td>
+                    <td>11875.83</td>
+                    <td>0.1053</td>
+                    <td>5.0</td>
+                    <td></td>
+                </tr>
+        
+                <tr>
+                    <td>4</td>
+                    <td>Muon (10 Steps, LR 0.06)</td>
+                    <td>9.3840</td>
+                    <td>11896.46</td>
+                    <td>0.1038</td>
+                    <td>5.0</td>
+                    <td></td>
+                </tr>
+        
+                <tr>
+                    <td>5</td>
+                    <td>Muon (10 Steps, LR 0.055)</td>
+                    <td>9.3867</td>
+                    <td>11929.10</td>
+                    <td>0.1037</td>
+                    <td>5.7</td>
+                    <td></td>
+                </tr>
+        
+            </table>
+            
+            <h2>📈 Visualizations</h2>
+            
+            <div class="plot">
+                <h3>Performance Comparison</h3>
+                <img src="plots/performance_comparison.png" alt="Performance Comparison">
+            </div>
+            
+            <div class="plot">
+                <h3>Training Curves</h3>
+                <img src="plots/training_curves.png" alt="Training Curves">
+            </div>
+            
+            <div class="plot">
+                <h3>Performance Heatmap</h3>
+                <img src="plots/performance_heatmap.png" alt="Performance Heatmap">
+            </div>
+            
+            <h2>🔍 Key Insights</h2>
+    
+            <div class="insight">
+                <strong>🥇 Overall Best:</strong> Muon (10 Steps, LR 0.065) achieved the lowest validation loss of 9.3752
+            </div>
+            
+            <div class="insight">
+                <strong>⚡ Speed Champion:</strong> Muon (10 Steps, LR 0.07) completed training in 5.0 seconds
+            </div>
+            
+            <div class="insight">
+                <strong>📈 Performance Range:</strong> Validation loss ranged from 9.3752 to 9.3867
+            </div>
+        
+            <div class="insight">
+                <strong>🔄 Newton-Schulz Steps:</strong> Best performing was Muon (10 Steps, LR 0.065) with 9.3752 validation loss
+            </div>
+            
+            <div class="insight">
+                <strong>📊 Momentum Analysis:</strong> Best momentum variant was Muon (10 Steps, LR 0.055, Momentum 0.88) with 9.3823 validation loss
+            </div>
+            
+            
+            <div class="summary">
+                <p><strong>Generated on:</strong> 2025-07-24 13:45:27</p>
+                <p><strong>Total Training Time:</strong> 25.6 seconds</p>
+                <p><strong>Success Rate:</strong> 5/5 experiments (100.0%)</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    

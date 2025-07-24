@@ -46,12 +46,12 @@ def set_seed(seed: int = 42):
 
 @dataclass
 class ModelConfig:
-    d_model: int = 256
-    n_heads: int = 8
-    n_layers: int = 4
-    d_ff: int = 1024
+    d_model: int = 128
+    n_heads: int = 4
+    n_layers: int = 2
+    d_ff: int = 512
     batch_size: int = 32
-    max_steps: int = 30
+    max_steps: int = 1500
 
     gradient_accumulation_steps: int = 2
     muon_lr: float = 0.01
@@ -60,7 +60,7 @@ class ModelConfig:
     num_documents: int = 1000
     max_tokens: int = 200000
 
-    eval_every: int = 50  # More frequent evaluation for better curves
+    eval_every: int = 25
     eval_steps: int = 25
 
     weight_decay: float = 0.1
@@ -708,7 +708,7 @@ def train_model_variant(config: ModelConfig, train_loader: DataLoader, val_loade
     training_time = time.time() - start_time
 
     # Save training history
-    history_file = results_dir / "data" / f"{variant_name.replace(' ', '_').replace('(', '').replace(')', '')}_history.json"
+    history_file = results_dir / "data" / f"{variant_name.replace(' ', '_').replace('(', '').replace(')', '').replace('/', '_')}_history.json"
     with open(history_file, 'w') as f:
         json.dump(training_history, f, indent=2)
 
@@ -1119,39 +1119,15 @@ if __name__ == "__main__":
     train_loader = DataLoader(train_dataset, batch_size=config.batch_size, shuffle=True, num_workers=2)
     val_loader = DataLoader(val_dataset, batch_size=config.batch_size, shuffle=False, num_workers=2)
 
-    # Focused experiments based on promising results
-    experiments = [
-        # Baseline
-        (MuonBase, "Muon Base (5 steps, 0.95 momentum)"),
-        
-        # Newton-Schulz steps exploration (6-12 range)
-        (MuonSteps6, "Muon (6 NS Steps)"),
-        (MuonSteps8, "Muon (8 NS Steps)"),
-        (MuonSteps9, "Muon (9 NS Steps)"),
-        (MuonSteps10, "Muon (10 NS Steps)"),
-        (MuonSteps12, "Muon (12 NS Steps)"),
-        
-        # Momentum fine-tuning around 0.90 range
-        (MuonMomentum88, "Muon (10 Steps, Momentum 0.88)"),
-        (MuonMomentum90, "Muon (10 Steps, Momentum 0.90)"),
-        (MuonMomentum92, "Muon (10 Steps, Momentum 0.92)"),
-        (MuonMomentum93, "Muon (10 Steps, Momentum 0.93)"),
-        (MuonMomentum96, "Muon (10 Steps, Momentum 0.96)"),
-        
-        # Learning rate variations
-        (MuonLR005, "Muon (10 Steps, LR 0.005)"),
-        (MuonLR015, "Muon (10 Steps, LR 0.015)"),
-        (MuonLR02, "Muon (10 Steps, LR 0.02)"),
-        
-        # Newton-Schulz variants with 10 steps
-        (MuonConservative10, "Muon (Conservative NS, 10 Steps)"),
-        (MuonMildAggressive10, "Muon (Mild Aggressive NS, 10 Steps)"),
-        (MuonUltraStable10, "Muon (Ultra Stable NS, 10 Steps)"),
-        
-        # Special combinations
-        (MuonBest10NoNesterov, "Muon (10 Steps, No Nesterov)"),
-        (MuonOptimal, "Muon Optimal (10 Steps, 0.90 momentum)"),
-    ]
+    # Large-Scale Ablation Study
+    experiments = []
+    for lr in [1/32, 1/16, 1/8]:
+        for momentum in [7/8, 15/16]:
+            for ns_steps in [4, 8, 16]:
+                variant_name = f"Muon (LR {lr:.4f}, Momentum {momentum:.4f}, {ns_steps} Steps)"
+                experiments.append(
+                    (lambda params, lr=lr, momentum=momentum, ns_steps=ns_steps: MuonBase(params, lr=lr, momentum=momentum, nesterov=True, ns_steps=ns_steps), variant_name)
+                )
 
     results = []
 
@@ -1220,17 +1196,4 @@ if __name__ == "__main__":
         print(f"   📁 All results: {results_dir}")
         print(f"   🌐 Report: {results_dir / 'reports' / 'focused_ablation_report.html'}")
         
-        # Previous vs current best
-        previous_best = 5.5208  # From previous run
-        current_best = best['val_loss']
-        improvement = ((previous_best - current_best) / previous_best) * 100
         
-        print(f"\n📊 PROGRESS:")
-        print(f"   Previous best Muon: {previous_best:.4f}")
-        print(f"   Current best Muon: {current_best:.4f}")
-        print(f"   Improvement: {improvement:+.1f}%")
-        
-        if improvement > 0:
-            print(f"   🎉 NEW RECORD! {improvement:.1f}% better than previous best!")
-        else:
-            print(f"   📝 No improvement, but valuable insights gained.")
