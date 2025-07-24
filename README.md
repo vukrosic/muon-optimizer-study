@@ -99,32 +99,6 @@ Systematic evaluation across:
 - Severe performance degradation (5.8+ validation loss)
 - Training instability and poor convergence
 
-
-## 🚀 Reproducing Results
-
-### Setup Environment
-```bash
-pip install torch transformers datasets numpy matplotlib seaborn
-```
-
-### Run Single Configuration
-```bash
-python src/train_muon.py \
-  --learning_rate 0.0312 \
-  --momentum 0.8750 \
-  --newton_schulz_steps 4 \
-  --steps 1500 \
-  --batch_size 32
-```
-
-### Run Full Ablation Study
-```bash
-python src/run_ablation.py \
-  --output_dir results/ \
-  --generate_plots \
-  --save_html_report
-```
-
 ## 💰 Cost-Effective Training with Vast.ai
 
 This study demonstrates how **Vast.ai** enables cost-effective deep learning research:
